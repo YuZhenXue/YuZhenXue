@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>導覽</title>
+
+    <style>
+      * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  header {
+    background-color: #C48888;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  h1 {
+    color: white;
+    font-size: 24px;
+    white-space: nowrap;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .menu {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  /* 響應式：手機版 */
+  @media screen and (max-width: 768px) {
+    header {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      height: 80px;
+    }
+  
+    h1 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+    }
+  
+    .menu {
+      display: block;
+      position: absolute;
+      left: 20px;
+      top: 22px;
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    nav {
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: #C48888;
+      display: none;
+      flex-direction: column;
+    }
+  
+    nav.active {
+      display: flex;
+    }
+  
+    nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+    }
+  
+    nav ul li a {
+      font-size: 20px;
+    }
+  }
+  
+  .news {
+    background-color: rgb(251, 246, 159);
+    color: white;
+    height: 90vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, .4)), url("https://www.capitancreative.com/panorama/%E6%97%A5%E8%BB%8D%E9%80%B2%E5%8F%B0%E5%8C%97%E5%9F%8E.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px; /* 避免內容被 header 遮住 */
+    text-align: center;
+  }
+  
+  .news h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .news p {
+    color: white;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  footer {
+    background-color: #A3B18A;
+    color: #F9F9F9;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+
+  #backToTop {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    z-index: 100;
+    background-color: #C48888;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: none; /* 預設隱藏 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease;
+  }
+  
+  #backToTop:hover {
+    background-color: #a86b6b;
+  }
+  
+  .spot-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 30px 20px;
+    background-color: #f0f0f0;
+  }
+  
+  .spot-buttons .btn {
+    background-color: #8A9A5B;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .spot-buttons .btn:hover {
+    background-color: #718048;
+  }
+  
+  .spot-section {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .spot-section h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .spot-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+
+  .external-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #f5f5dc;
+    color: #5a3e36;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #d8cfc4; /* 淡淡的邊框讓按鈕更立體 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .external-link:hover {
+    background-color: #e7dec8; /* 深一點的米白作為 hover 效果 */
+    color: #3e2b22;            /* 更深一點的咖啡字體 */
+  }
+
+  .spot-img {
+    width: 100%;
+    max-width: 400px; /* 控制最大寬度 */
+    height: 250px; /* 統一高度 */
+    object-fit: cover; /* 裁切填滿不變形 */
+    border: 3px solid #ccc; /* 邊框 */
+    border-radius: 8px; /* 圓角可選 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 陰影可選 */
+    margin: 10px 0;
+  }
+
+
+  .spot-img {
+    width: 300px;              /* 或你想要的統一尺寸 */
+    height: 200px;
+    object-fit: cover;
+    border: 3px solid #aaa;
+    border-radius: 8px;
+    cursor: zoom-in;           /* 👈 這行是關鍵，顯示放大鏡游標 */
+    transition: transform 0.2s;
+  }
+  
+  .spot-img:hover {
+    transform: scale(1.02);    /* 滑過時微微放大也很直覺 */
+  }
+  
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .lightbox.show {
+    display: flex;
+  }
+  
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: 4px solid white;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+  }
+  
+  .lightbox img {
+    cursor: zoom-out;
+  }
+  
+
+  .spot-section {
+    text-align: center; /* 讓內部圖片水平置中 */
+    padding: 20px;
+  }
+  
+  .spot-img {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border: 3px solid #aaa;
+    border-radius: 8px;
+    cursor: zoom-in;
+    transition: transform 0.2s;
+  }
+
+
+  .img-row {
+    display: flex;
+    justify-content: center;  /* 水平置中 */
+    gap: 20px;                 /* 圖片間的距離 */
+    margin-bottom: 1em;
+  }
+  
+  .img-row img {
+    width: 300px;              /* 固定圖片寬度 */
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+
+  .button-row {
+    display: flex;
+    justify-content: center; /* 讓按鈕在父容器中水平置中 */
+    gap: 15px; /* 兩個按鈕之間的距離 */
+    margin-top: 10px;
+  }
+  
+  .external-link {
+    background-color:#555;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .external-link:hover {
+    background-color:#777;
+  }
+    </style>
+
+</head>
+<body>
+    <header>
+        <button class="menu">&#9776;</button>
+        <h1><strong>北門周邊古蹟一日遊</strong></h1>
+        <nav class="nav">
+            <ul>
+                <li><a href="https://felt.com/map/Xie-E-De-Dong-Xi-2OkZrqo9CRUebva7X7Ua9AcD?loc=25.04664,121.50726,14.67z&share=1" target="_blank" rel="noopener noreferrer">路線與交通</a></li>
+                <li><a href="second.html">景點簡介</a></li>
+                <li><a href="https://new.playreal.city?openExternalBrowser=1&serialNumber=WHLTFYXWHIEN">小遊戲</a></li>
+                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc4jK0JbOs_WVm-V0eZxqbngzJ1hiQ_UaZzFf2V4yrNhin3wQ/viewform?usp=header" target="_blank" rel="noopener noreferrer">回饋表單</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="news">
+            <h2><em>Join our tour</em></h2>
+            <p>誠摯邀請您參加「北門周邊古蹟一日遊」活動，一同探索歷史的足跡。</p>
+            <p>讓您親身感受臺北城的文化魅力，瞭解臺北的古蹟故事。</p>
+            <p>專業導遊將為您帶來精彩的導覽，期待您的加入!</p>
+
+        </section>
+        <button id="backToTop" title="回到上方">↑</button>
+    </main>
+
+    
+
+    <footer>
+        <p>僅作為課堂用途使用 © 2025 天上的卡茲不說話 版權所有</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.querySelector('.menu');
+        const nav = document.querySelector('nav');
+
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+
+        document.querySelectorAll('.btn').forEach(button => {
+  button.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const target = document.querySelector(targetId);
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 80, // 假如 header 高度是 80px
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+
+
+  const backToTopBtn = document.getElementById("backToTop");
+
+  // 滑動顯示按鈕
+  window.onscroll = function () {
+    if (document.documentElement.scrollTop > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  };
+
+  // 點擊返回最上方
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+
+
+    </script>
+</body>
+</html>

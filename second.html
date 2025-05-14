@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>景點介紹</title>
+  <style>
+    * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  header {
+    background-color: #C48888;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  h1 {
+    color: white;
+    font-size: 24px;
+    white-space: nowrap;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .menu {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  
+  /* 響應式：手機版 */
+  @media screen and (max-width: 768px) {
+    header {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      height: 80px;
+    }
+  
+    h1 {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+    }
+  
+    .menu {
+      display: block;
+      position: absolute;
+      left: 20px;
+      top: 22px;
+      background-color: transparent;
+      border: none;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    nav {
+      position: absolute;
+      top: 80px;
+      left: 0;
+      width: 100%;
+      background-color: #C48888;
+      display: none;
+      flex-direction: column;
+    }
+  
+    nav.active {
+      display: flex;
+    }
+  
+    nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+    }
+  
+    nav ul li a {
+      font-size: 20px;
+    }
+  }
+  
+  .news {
+    background-color: rgb(251, 246, 159);
+    color: white;
+    height: 90vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, .4)), url("https://www.capitancreative.com/panorama/%E6%97%A5%E8%BB%8D%E9%80%B2%E5%8F%B0%E5%8C%97%E5%9F%8E.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px; /* 避免內容被 header 遮住 */
+    text-align: center;
+  }
+  
+  .news h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .news p {
+    color: white;
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  footer {
+    background-color: #A3B18A;
+    color: #F9F9F9;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+
+  #backToTop {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    z-index: 100;
+    background-color: #C48888;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: none; /* 預設隱藏 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: opacity 0.3s ease;
+  }
+  
+  #backToTop:hover {
+    background-color: #a86b6b;
+  }
+  
+  .spot-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 30px 20px;
+    background-color: #f0f0f0;
+  }
+  
+  .spot-buttons .btn {
+    background-color: #8A9A5B;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .spot-buttons .btn:hover {
+    background-color: #718048;
+  }
+  
+  .spot-section {
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .spot-section h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .spot-img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+
+  .external-link {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #f5f5dc;
+    color: #5a3e36;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #d8cfc4; /* 淡淡的邊框讓按鈕更立體 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .external-link:hover {
+    background-color: #e7dec8; /* 深一點的米白作為 hover 效果 */
+    color: #3e2b22;            /* 更深一點的咖啡字體 */
+  }
+
+  .spot-img {
+    width: 100%;
+    max-width: 400px; /* 控制最大寬度 */
+    height: 250px; /* 統一高度 */
+    object-fit: cover; /* 裁切填滿不變形 */
+    border: 3px solid #ccc; /* 邊框 */
+    border-radius: 8px; /* 圓角可選 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 陰影可選 */
+    margin: 10px 0;
+  }
+
+
+  .spot-img {
+    width: 300px;              /* 或你想要的統一尺寸 */
+    height: 200px;
+    object-fit: cover;
+    border: 3px solid #aaa;
+    border-radius: 8px;
+    cursor: zoom-in;           /* 👈 這行是關鍵，顯示放大鏡游標 */
+    transition: transform 0.2s;
+  }
+  
+  .spot-img:hover {
+    transform: scale(1.02);    /* 滑過時微微放大也很直覺 */
+  }
+  
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .lightbox.show {
+    display: flex;
+  }
+  
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: 4px solid white;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+  }
+  
+  .lightbox img {
+    cursor: zoom-out;
+  }
+  
+
+  .spot-section {
+    text-align: center; /* 讓內部圖片水平置中 */
+    padding: 20px;
+  }
+  
+  .spot-img {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border: 3px solid #aaa;
+    border-radius: 8px;
+    cursor: zoom-in;
+    transition: transform 0.2s;
+  }
+
+
+  .img-row {
+    display: flex;
+    justify-content: center;  /* 水平置中 */
+    gap: 20px;                 /* 圖片間的距離 */
+    margin-bottom: 1em;
+  }
+  
+  .img-row img {
+    width: 300px;              /* 固定圖片寬度 */
+    height: auto;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+
+  .button-row {
+    display: flex;
+    justify-content: center; /* 讓按鈕在父容器中水平置中 */
+    gap: 15px; /* 兩個按鈕之間的距離 */
+    margin-top: 10px;
+  }
+  
+  .external-link {
+    background-color:#555;
+    color: white;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .external-link:hover {
+    background-color:#777;
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <button class="menu">&#9776;</button>
+  <h1><strong>北門周邊古蹟一日遊</strong></h1>
+  <nav>
+    <ul>
+      <li><a href="../導覽網頁/first.html">回首頁</a></li> 
+      <li><a href="https://felt.com/map/Xie-E-De-Dong-Xi-2OkZrqo9CRUebva7X7Ua9AcD?loc=25.04664,121.50726,14.67z&share=1" target="_blank" rel="noopener noreferrer">路線與交通</a></li>
+      <li><a href="https://new.playreal.city?openExternalBrowser=1&serialNumber=WHLTFYXWHIEN">小遊戲</a></li>
+      <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc4jK0JbOs_WVm-V0eZxqbngzJ1hiQ_UaZzFf2V4yrNhin3wQ/viewform?usp=header" target="_blank" rel="noopener noreferrer">回饋表單</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main style="padding-top: 100px;">
+  <!-- 景點導覽按鈕 -->
+  <div class="spot-buttons">
+    <a href="#spot1" class="btn">國立臺灣博物館鐵道部園區</a>
+    <a href="#spot2" class="btn">北門</a>
+    <a href="#spot3" class="btn">郵政博物館臺北館</a>
+    <a href="#spot4" class="btn">撫臺街洋樓</a>
+    <a href="#spot5" class="btn">博愛路2號街屋</a>
+    
+  </div>
+
+  <!-- 景點介紹 -->
+  <section id="spot1" class="spot-section">
+    <h2>國立臺灣博物館鐵道部園區</h2>
+    <div class="img-row">
+    <img src="C:\Users\User\Desktop\導覽網頁\鐵道部.jpg" alt="鐵道部" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\鐵道部舊照.jpg" alt="鐵道部舊照" class="spot-img"/>
+  </div>
+    <p>
+        鐵道部所在位置原為西元1884年、時任臺灣巡撫的劉銘傳所建的機器局廠區。西元1895年日本接手臺灣後，此處便由日
+        本軍方接收，作為軍工廠使用，五年後又移交給鐵道部，改為火車保養、修理的台北工場，而首任部長為後藤新平。
+        1918年因為鐵道業務大增，台北工場向東擴張，廠區的南邊則拆除舊有建物，興建今日我們看見的鐵道部主建築，稱
+        為廳舍，由著名總督府土木局技師森山松之助設計，其南北翼工程分為兩期起造，形成了北工場、南廳舍的形式。
+        
+    </p>
+    <div class="button-row">
+    <a href="https://www.ntm.gov.tw/cp.aspx?n=5440" target="_blank" class="external-link">查看更多</a>
+    <a href=https://www.setn.com/News.aspx?NewsID=773369 target="_blank" class="external-link">圖片來源</a>
+  </div>
+
+  </section>
+  
+  <section id="spot2" class="spot-section">
+    <h2>北門</h2>
+    <div class="img-row">
+    <img src="C:\Users\User\Desktop\導覽網頁\北門.jpg" alt="北門" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\北門舊照.jpg" alt="北門舊照" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\影像 (3).png" alt="臺北五城門" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\影像 (4).png" alt="3D重現臺北城歷史場景" class="spot-img"/>
+
+  </div>
+    <p>
+        為封閉式碉堡設計，屋頂、牆面及台座完全合為一體，二方一圓的外壁窗洞，具有監視作用，易守難攻。城牆的石材
+        來自於內湖大直北勢湖一帶的安山岩。為了防禦火炮，北門的牆體由磚塊與石條砌成，內部有兩層牆壁，構造堅固。
+        屋架為中國傳統式木構架，雕飾簡潔；屋頂採用單簷歇山式，燕尾起翹，整體看起來，柔和與剛硬渾然融為一體。
+        (左邊兩張圖由淡江大學資圖系林信成教授提供)
+
+    </p>
+    <div class="button-row">
+    <a href="http://tamsui.dils.tku.edu.tw/wiki/index.php/%E5%8C%97%E9%96%80" target="_blank" class="external-link">查看更多</a>
+    <a href=https://zh.wikipedia.org/zh-tw/%E8%87%BA%E5%8C%97%E5%BA%9C%E5%9F%8E%E5%8C%97%E9%96%80 target="_blank" class="external-link">圖片來源</a>
+  </div>
+  </section>
+
+  <section id="spot3" class="spot-section">
+    <h2>郵政博物館臺北館</h2>
+    <div class="img-row">
+    <img src="C:\Users\User\Desktop\導覽網頁\郵局.jpg" alt="郵政博物館臺北館" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\郵局舊照.jpg" alt="郵政博物館臺北館舊照" class="spot-img"/>
+  </div>
+    <p>
+        郵政博物館臺北館現址原為臺北北門郵局集郵服務中心，供展示郵品、推廣集郵業務及民間郵會辦理集郵相關活動。
+        2015年1月18日成立「郵政博物館臺北北門分館」，2020年5月20日更名為「郵政博物館臺北館」。內設有郵筒展示
+        區、精品展示區、時光走廊、角落藝廊、拍照區、親子益智區，內含多種互動單元；特展室則不定期舉辦各類主題
+        性郵票展覽。
+
+    </p>
+    <div class="button-row">
+    <a href="http://tamsui.dils.tku.edu.tw/wiki/index.php/%E9%83%B5%E6%94%BF%E5%8D%9A%E7%89%A9%E9%A4%A8%E8%87%BA%E5%8C%97%E9%A4%A8" target="_blank" class="external-link">查看更多</a>
+    <a href=https://subservices.post.gov.tw/post/internet/Q_localpost/index.jsp?ID=12010201#undefined target="_blank" class="external-link">圖片來源</a>
+  </div>
+  </section>
+
+
+  <section id="spot4" class="spot-section">
+    <h2>撫臺街洋樓</h2>
+    <div class="img-row">
+    <img src="C:\Users\User\Desktop\導覽網頁\洋樓.jpeg" alt="撫臺街洋樓" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\洋樓舊照.jpg" alt="撫臺街洋樓舊照" class="spot-img"/>
+  </div>
+    <p>
+        撫臺街洋樓又稱「石頭厝」，為臺北市直轄市定古蹟，是臺北舊城內現存年代最早之民間建築。於1910年落成，
+        最初為日本營造商的事務所，之後陸續有不同性質的行業、團體進駐，現今主要作為展覽場地。1895（清光緒21
+        年）年，清廷因甲午戰爭戰敗，將臺灣割讓予日本，日本人來臺後逐步實施市區改正計畫，1904年（明治37年）
+        將所有城牆與西門拆除，定名且劃定「撫臺街」街區，範圍在今北門南側、博愛路以西、武昌街以北、中華路以
+        東，為當時最早建造的一批建築。
+   
+    </p>
+    <div class="button-row">
+    <a href="http://tamsui.dils.tku.edu.tw/wiki/index.php/%E6%92%AB%E8%87%BA%E8%A1%97%E6%B4%8B%E6%A8%93" target="_blank" class="external-link">查看更多</a>
+    <a href=https://classic-blog.udn.com/webman/124425989 target="_blank" class="external-link">圖片來源</a>
+  </div>
+  </section>
+
+  <section id="spot5" class="spot-section">
+    <h2>博愛路2號街屋</h2>
+    <div class="img-row">
+    <img src="C:\Users\User\Desktop\導覽網頁\街屋.jpg" alt="博愛路2號街屋" class="spot-img"/>
+    <img src="C:\Users\User\Desktop\導覽網頁\街屋舊照.jpg" alt="博愛路2號街屋舊照" class="spot-img"/>
+  </div>
+    <p>
+        2號街屋位於博愛路與延平南路的交叉口，博愛路在臺北城建城前就已開闢，其為昭和初期的建築，立面簡潔優雅
+        ，呈現出四柱三窗的風格，屋頂有出簷覆蓋日式棧瓦，1樓為東京堂鐘錶店，2、3樓日治時期曾為中央食堂，旁
+        邊是草山循環巴士乘車點，戰後，隨著政府機關和報社在臺北市內集中，博愛路和漢口街一帶逐漸發展成臺北市
+        的攝影器材商圈，至今仍然是修理相機和購買攝影設備的必去之處，因此又被稱為「相機街三角屋」。
+ 
+    </p>
+    <div class="button-row">
+    <a href="http://tamsui.dils.tku.edu.tw/wiki/index.php/%E5%8D%9A%E6%84%9B%E8%B7%AF2%E8%99%9F%E8%A1%97%E5%B1%8B" target="_blank" class="external-link">查看更多</a>
+    <a href=https://classic-blog.udn.com/webman/180617020 target="_blank" class="external-link">圖片來源</a>
+  </div>
+  </section>
+
+  <button id="backToTop" title="回到上方">↑</button> 
+</main>
+
+
+<!-- 放大圖片燈箱 -->
+<div id="lightbox" class="lightbox">
+  <div class="lightbox-overlay"></div>
+  <img id="lightbox-img" src="" alt="放大圖片">
+</div>
+
+
+
+<footer>
+  <p>僅作為課堂用途使用 © 2025 天上的卡茲不說話 版權所有</p>
+</footer>
+
+<!-- 小型 JS 用於漢堡選單切換 -->
+<script>
+  document.querySelector('.menu').addEventListener('click', function () {
+    document.querySelector('nav').classList.toggle('active');
+  });
+
+
+  document.querySelectorAll('.btn').forEach(button => {
+  button.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    const target = document.querySelector(targetId);
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 80, // 假如 header 高度是 80px
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+
+const backToTopBtn = document.getElementById("backToTop");
+
+  // 滑動顯示按鈕
+  window.onscroll = function () {
+    if (document.documentElement.scrollTop > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  };
+
+  // 點擊返回最上方
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+
+  /// 點擊圖片放大顯示
+document.querySelectorAll('.spot-img').forEach(img => {
+  img.addEventListener('click', () => {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = img.src;
+    lightbox.classList.add('show');
+  });
+});
+
+// 點擊圖片或背景都能關閉
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  // 點擊到圖片以外才關閉
+  if (e.target.id === 'lightbox' || e.target.id === 'lightbox-img') {
+    document.getElementById('lightbox').classList.remove('show');
+  }
+});
+
+</script>
+
+
+
+
+</body>
+</html>
