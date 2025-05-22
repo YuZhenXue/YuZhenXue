@@ -119,6 +119,39 @@
     nav ul li a {
       font-size: 20px;
     }
+
+    .img-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .img-row img {
+    width: 90%;
+    height: auto;
+  }
+
+  .spot-section h2 {
+    font-size: 22px;
+  }
+
+  .spot-section {
+    padding: 20px 10px;
+  }
+
+  .news h2 {
+    font-size: 28px;
+  }
+
+  .news p {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  .external-link {
+    padding: 10px 16px;
+    font-size: 16px;
+  }
+
   }
   
   .news {
@@ -218,12 +251,17 @@
   }
   
   .spot-img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  object-fit: cover;
+  border: 3px solid #aaa;
+  border-radius: 8px;
+  cursor: zoom-in;
+  transition: transform 0.2s;
+  display: block;
+  margin: 10px auto;
+}
   
 
   .external-link {
@@ -242,27 +280,8 @@
     color: #3e2b22;            /* 更深一點的咖啡字體 */
   }
 
-  .spot-img {
-    width: 100%;
-    max-width: 400px; /* 控制最大寬度 */
-    height: 250px; /* 統一高度 */
-    object-fit: cover; /* 裁切填滿不變形 */
-    border: 3px solid #ccc; /* 邊框 */
-    border-radius: 8px; /* 圓角可選 */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 陰影可選 */
-    margin: 10px 0;
-  }
+  
 
-
-  .spot-img {
-    width: 300px;              /* 或你想要的統一尺寸 */
-    height: 200px;
-    object-fit: cover;
-    border: 3px solid #aaa;
-    border-radius: 8px;
-    cursor: zoom-in;           /* 👈 這行是關鍵，顯示放大鏡游標 */
-    transition: transform 0.2s;
-  }
   
   .spot-img:hover {
     transform: scale(1.02);    /* 滑過時微微放大也很直覺 */
@@ -306,17 +325,7 @@
     padding: 20px;
   }
   
-  .spot-img {
-    display: block;
-    margin: 0 auto;
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    border: 3px solid #aaa;
-    border-radius: 8px;
-    cursor: zoom-in;
-    transition: transform 0.2s;
-  }
+  
 
 
   .img-row {

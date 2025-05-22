@@ -216,53 +216,24 @@
     color: #333;
   }
   
+ 
   .spot-img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-  
-
-  .external-link {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #f5f5dc;
-    color: #5a3e36;
-    text-decoration: none;
-    border-radius: 5px;
-    border: 1px solid #d8cfc4; /* 淡淡的邊框讓按鈕更立體 */
-  transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  .external-link:hover {
-    background-color: #e7dec8; /* 深一點的米白作為 hover 效果 */
-    color: #3e2b22;            /* 更深一點的咖啡字體 */
-  }
-
-  .spot-img {
-    width: 100%;
-    max-width: 400px; /* 控制最大寬度 */
-    height: 250px; /* 統一高度 */
-    object-fit: cover; /* 裁切填滿不變形 */
-    border: 3px solid #ccc; /* 邊框 */
-    border-radius: 8px; /* 圓角可選 */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 陰影可選 */
-    margin: 10px 0;
-  }
+  display: block;
+  margin: 0 auto;
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border: 3px solid #aaa;
+  border-radius: 8px;
+  cursor: zoom-in;
+  transition: transform 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.spot-img:hover {
+  transform: scale(1.02);
+}
 
 
-  .spot-img {
-    width: 300px;              /* 或你想要的統一尺寸 */
-    height: 200px;
-    object-fit: cover;
-    border: 3px solid #aaa;
-    border-radius: 8px;
-    cursor: zoom-in;           /* 👈 這行是關鍵，顯示放大鏡游標 */
-    transition: transform 0.2s;
-  }
-  
   .spot-img:hover {
     transform: scale(1.02);    /* 滑過時微微放大也很直覺 */
   }
@@ -284,38 +255,38 @@
   .lightbox.show {
     display: flex;
   }
-  
+
+
   .lightbox img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    border: 4px solid white;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-    cursor: pointer;
-  }
-  
-  .lightbox img {
-    cursor: zoom-out;
-  }
-  
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border: 4px solid white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  cursor: zoom-out;
+}
 
   .spot-section {
     text-align: center; /* 讓內部圖片水平置中 */
     padding: 20px;
   }
   
-  .spot-img {
-    display: block;
-    margin: 0 auto;
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    border: 3px solid #aaa;
-    border-radius: 8px;
-    cursor: zoom-in;
-    transition: transform 0.2s;
-  }
+
+  .image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.image-grid img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
 
 
   .img-row {
@@ -341,19 +312,29 @@
   }
   
   .external-link {
-    background-color:#555;
-    color: white;
-    padding: 8px 12px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    border: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .external-link:hover {
-    background-color:#777;
-  }
+  background: linear-gradient(to right, #444, #222);
+  color: #fff;
+  padding: 10px 20px;
+  margin: 8px;
+  text-decoration: none;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: inline-block;
+}
+
+.external-link:hover {
+  background: linear-gradient(to right, #666, #444);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+
+
+
   </style>
 </head>
 <body>
@@ -363,7 +344,7 @@
   <h1><strong>北門周邊古蹟一日遊</strong></h1>
   <nav>
     <ul>
-      <li><a href="https://yuzhenxue.github.io/YuZhenXue/">回首頁</a></li> 
+      <li><a href="../導覽網頁/index.html">回首頁</a></li> 
       <li><a href="https://felt.com/map/Xie-E-De-Dong-Xi-2OkZrqo9CRUebva7X7Ua9AcD?loc=25.04664,121.50726,14.67z&share=1" target="_blank" rel="noopener noreferrer">路線與交通</a></li>
       <li><a href="https://new.playreal.city?openExternalBrowser=1&serialNumber=WHLTFYXWHIEN">小遊戲</a></li>
       <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc4jK0JbOs_WVm-V0eZxqbngzJ1hiQ_UaZzFf2V4yrNhin3wQ/viewform?usp=header" target="_blank" rel="noopener noreferrer">回饋表單</a></li>
@@ -385,7 +366,7 @@
   <!-- 景點介紹 -->
   <section id="spot1" class="spot-section">
     <h2>國立臺灣博物館鐵道部園區</h2>
-    <div class="img-row">
+    <div class="image-grid">
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E9%90%B5%E9%81%93%E9%83%A8.jpg?raw=true" alt="鐵道部" class="spot-img"/>
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E9%90%B5%E9%81%93%E9%83%A8%E8%88%8A%E7%85%A7.jpg?raw=true" alt="鐵道部舊照" class="spot-img"/>
   </div>
@@ -405,7 +386,7 @@
   
   <section id="spot2" class="spot-section">
     <h2>北門</h2>
-    <div class="img-row">
+    <div class="image-grid">
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E5%8C%97%E9%96%80.jpg?raw=true" alt="北門" class="spot-img"/>
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E5%8C%97%E9%96%80%E8%88%8A%E7%85%A7.jpg?raw=true" alt="北門舊照" class="spot-img"/>
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E5%BD%B1%E5%83%8F%20(3).png?raw=true" alt="臺北五城門" class="spot-img"/>
@@ -427,7 +408,7 @@
 
   <section id="spot3" class="spot-section">
     <h2>郵政博物館臺北館</h2>
-    <div class="img-row">
+    <div class="image-grid">
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E9%83%B5%E5%B1%80.jpg?raw=true" alt="郵政博物館臺北館" class="spot-img"/>
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E9%83%B5%E5%B1%80%E8%88%8A%E7%85%A7.jpg?raw=true" alt="郵政博物館臺北館舊照" class="spot-img"/>
   </div>
@@ -447,7 +428,7 @@
 
   <section id="spot4" class="spot-section">
     <h2>撫臺街洋樓</h2>
-    <div class="img-row">
+    <div class="image-grid">
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E6%B4%8B%E6%A8%93.jpeg?raw=true" alt="撫臺街洋樓" class="spot-img"/>
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E6%B4%8B%E6%A8%93%E8%88%8A%E7%85%A7.jpg?raw=true" alt="撫臺街洋樓舊照" class="spot-img"/>
   </div>
@@ -467,7 +448,7 @@
 
   <section id="spot5" class="spot-section">
     <h2>博愛路2號街屋</h2>
-    <div class="img-row">
+    <div class="image-grid">
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E8%A1%97%E5%B1%8B.jpg?raw=true" alt="博愛路2號街屋" class="spot-img"/>
     <img src="https://github.com/YuZhenXue/YuZhenXue/blob/main/%E8%A1%97%E5%B1%8B%E8%88%8A%E7%85%A7.jpg?raw=true" alt="博愛路2號街屋舊照" class="spot-img"/>
   </div>
